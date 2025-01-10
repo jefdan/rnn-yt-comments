@@ -18,6 +18,7 @@ class RNN(nn.Module):
 
 
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+# device = torch.device('cpu')
 
 if os.path.exists('vocab_to_int.pth') and os.path.exists('int_to_vocab.pth'):
     vocab_to_int = torch.load('vocab_to_int.pth', weights_only=True)

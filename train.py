@@ -37,8 +37,7 @@ int_to_vocab = {idx: word for word, idx in vocab_to_int.items()}
 torch.save(vocab_to_int, 'vocab_to_int.pth')
 torch.save(int_to_vocab, 'int_to_vocab.pth')
 
-special_tokens = ['<START>', '<EOS>', '<UNK>']
-vocab_size = len(vocab_to_int) - len(special_tokens) + 1
+vocab_size = len(vocab_to_int)
 
 with open('vocab_size.txt', 'w') as f:
     f.write(str(vocab_size))
@@ -72,12 +71,11 @@ dataset = CommentsDataset(comments_int)
 dataloader = DataLoader(
     dataset, batch_size=32, shuffle=True, collate_fn=collate_fn)
 
-vocab_size = len(vocab) + 1
 embedding_dim = 64
 hidden_dim = 128
 output_dim = vocab_size
 learning_rate = 0.001
-num_epochs = 10
+num_epochs = 1
 
 print(f"Using device: {device}")
 
@@ -93,6 +91,12 @@ for epoch in range(num_epochs):
         inputs = inputs.to(device)
         targets = inputs[:, 1:].contiguous().view(-1).to(device)
         inputs = inputs[:, :-1]
+
+        # Check for out-of-bounds indices
+        max_idx = inputs.max().item()
+        if max_idx >= vocab_size:
+            print(f"Out-of-bounds index found in inputs: {max_idx} >= {vocab_size}")
+            continue
 
         optimizer.zero_grad()
         outputs = model(inputs)
