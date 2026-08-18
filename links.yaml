@@ -5,17 +5,97 @@ settings:
   language: en
 
 videos:
-  - url: https://youtube.com/shorts/NpomiDmPPC0
+  - url: https://www.youtube.com/watch?v=GlYgs6v2YfU
     name: example-short
     enabled: true
     max_comments: null
     options: {}
-  - url: https://youtube.com/shorts/ssSshYYCx0A
+  - url: https://www.youtube.com/watch?v=l6DKRf-fAAM
     name: example-short
     enabled: true
     max_comments: null
     options: {}
-  - url: https://youtube.com/shorts/9TKxHUqWAo4
+  - url: https://www.youtube.com/watch?v=ldxFjLJ3rVY
+    name: example-short
+    enabled: true
+    max_comments: null
+    options: {}
+  - url: https://www.youtube.com/watch?v=fsLh-NYhOoU&pp=0gcJCRMMAYcqIYzv
+    name: example-short
+    enabled: true
+    max_comments: null
+    options: {}
+  - url: https://www.youtube.com/watch?v=BHdbsHFs2P0&t=5s
+    name: example-short
+    enabled: true
+    max_comments: null
+    options: {}
+  - url: https://www.youtube.com/watch?v=FE-hM1kRK4Y
+    name: example-short
+    enabled: true
+    max_comments: null
+    options: {}
+  - url: https://www.youtube.com/watch?v=j0wJBEZdwLs
+    name: example-short
+    enabled: true
+    max_comments: null
+    options: {}
+  - url: https://www.youtube.com/watch?v=-j8PzkZ70Lg
+    name: example-short
+    enabled: true
+    max_comments: null
+    options: {}
+  - url: https://www.youtube.com/watch?v=M-MgQC6z3VU
+    name: example-short
+    enabled: true
+    max_comments: null
+    options: {}
+  - url: https://www.youtube.com/watch?v=_BrFKp-U8GI
+    name: example-short
+    enabled: true
+    max_comments: null
+    options: {}
+  - url: https://www.youtube.com/watch?v=itRV2jEtV8Q
+    name: example-short
+    enabled: true
+    max_comments: null
+    options: {}
+  - url: https://www.youtube.com/watch?v=4NlrfOl0l8U
+    name: example-short
+    enabled: true
+    max_comments: null
+    options: {}
+  - url: https://www.youtube.com/watch?v=iv-5mZ_9CPY
+    name: example-short
+    enabled: true
+    max_comments: null
+    options: {}
+  - url: https://www.youtube.com/watch?v=Dlsa9EBKDGI
+    name: example-short
+    enabled: true
+    max_comments: null
+    options: {}
+  - url: https://www.youtube.com/watch?v=RQWpF2Gb-gU
+    name: example-short
+    enabled: true
+    max_comments: null
+    options: {}
+  - url: https://www.youtube.com/watch?v=6dTyOl1fmDo&pp=0gcJCRMMAYcqIYzv
+    name: example-short
+    enabled: true
+    max_comments: null
+    options: {}
+  - url: https://www.youtube.com/watch?v=hFMaT9oRbs4
+    name: example-short
+    enabled: true
+    max_comments: null
+    options: {}
+  - url: https://www.youtube.com/watch?v=YdOXS_9_P4U
+    name: example-short
+    enabled: true
+    max_comments: null
+    options: {}
+  - url: https://www.youtube.com/watch?v=IQqtsm-bBRU
     name: example-short
     enabled: true
     max_comments: null
