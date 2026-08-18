@@ -15,7 +15,7 @@ def latest_artifact(artifacts_dir: Path) -> Path:
     return artifacts_dir / pointer.read_text(encoding="utf-8").strip()
 
 
-def generate(artifact_dir: Path, *, max_length: int = 80, temperature: float = 0.9, seed: int | None = None) -> str:
+def generate(artifact_dir: Path, *, prompt: str = "", max_length: int = 80, temperature: float = 0.9, seed: int | None = None) -> str:
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     artifact = ModelArtifact.load(artifact_dir, device)
     metadata = artifact.metadata
@@ -24,7 +24,9 @@ def generate(artifact_dir: Path, *, max_length: int = 80, temperature: float = 0
     model.eval()
     if seed is not None:
         torch.manual_seed(seed)
+    prompt_tokens = prompt.strip().split()
     current = [metadata.special_tokens["<START>"]]
+    current.extend(artifact.vocab_to_int.get(token, metadata.special_tokens["<UNK>"]) for token in prompt_tokens)
     generated: list[str] = []
     with torch.no_grad():
         for _ in range(max_length):
@@ -32,7 +34,9 @@ def generate(artifact_dir: Path, *, max_length: int = 80, temperature: float = 0
             token = int(torch.multinomial(torch.softmax(logits, dim=0), 1).item())
             word = artifact.int_to_vocab.get(token, "<UNK>")
             if word == "<EOS>":
-                break
+                if generated:
+                    break
+                continue
             if word not in {"<PAD>", "<START>"}:
                 generated.append(word)
             current.append(token)

@@ -12,3 +12,12 @@ def test_health_endpoint(tmp_path: Path) -> None:
     response = client.get("/health")
     assert response.status_code == 200
     assert response.json() == {"status": "ok"}
+
+
+def test_generate_accepts_prompt_body(tmp_path: Path) -> None:
+    config = tmp_path / "links.yaml"
+    config.write_text("videos:\n  - url: https://youtu.be/example\n", encoding="utf-8")
+    client = TestClient(create_app(config))
+    response = client.post("/generate", json={"prompt": "hello", "max_length": 4})
+    assert response.status_code == 404
+    assert "No trained model" in response.json()["detail"]

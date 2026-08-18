@@ -46,9 +46,9 @@ def train_model(config: Path = typer.Option(Path("links.yaml"), "--config", "-c"
 
 
 @app.command()
-def generate(config: Path = typer.Option(Path("links.yaml"), "--config", "-c"), temperature: float = typer.Option(0.9, min=0.05, max=3.0), max_length: int = typer.Option(80, min=1, max=500)) -> None:
-    """Generate one comment from the latest model."""
-    typer.echo(_service(config).generate(temperature=temperature, max_length=max_length))
+def generate(prompt: str = typer.Argument("", help="Message to use as generation context."), config: Path = typer.Option(Path("links.yaml"), "--config", "-c"), temperature: float = typer.Option(0.9, min=0.05, max=3.0), max_length: int = typer.Option(80, min=1, max=500)) -> None:
+    """Generate a response to a message using the latest model."""
+    typer.echo(_service(config).generate(prompt=prompt, temperature=temperature, max_length=max_length))
 
 
 @app.command()
