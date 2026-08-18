@@ -3,6 +3,12 @@ comments.txt
 comments-json/*.json
 unused-comments-json/
 unused-links.txt
+data/raw/
+data/processed/
+artifacts/models/*
+!artifacts/models/.gitkeep
+runs/
+.venv/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

@@ -1,0 +1,34 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ytcomments"
+version = "0.1.0"
+description = "Download YouTube comments, train an RNN, and generate text from a TUI, CLI, or API."
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "fastapi>=0.115,<1",
+    "numpy>=2.0,<3",
+    "PyYAML>=6.0,<7",
+    "textual>=0.80,<1",
+    "torch>=2.5,<3",
+    "typer>=0.15,<1",
+    "uvicorn[standard]>=0.32,<1",
+]
+
+[project.optional-dependencies]
+test = ["pytest>=8.0,<9", "httpx>=0.27,<1"]
+
+[project.scripts]
+ytcomments = "ytcomments.cli:app"
+ytcomments-tui = "ytcomments.tui:run"
+ytcomments-api = "ytcomments.api:serve"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]

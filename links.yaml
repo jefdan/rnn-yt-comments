@@ -1,0 +1,22 @@
+# Canonical YouTube input configuration.
+# Per-video options are retained for future downloader features.
+settings:
+  max_comments: null
+  language: en
+
+videos:
+  - url: https://youtube.com/shorts/NpomiDmPPC0
+    name: example-short
+    enabled: true
+    max_comments: null
+    options: {}
+  - url: https://youtube.com/shorts/ssSshYYCx0A
+    name: example-short
+    enabled: true
+    max_comments: null
+    options: {}
+  - url: https://youtube.com/shorts/9TKxHUqWAo4
+    name: example-short
+    enabled: true
+    max_comments: null
+    options: {}

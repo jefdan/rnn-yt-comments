@@ -1,27 +1,49 @@
-# RNN YouTube Comments
-A recurrent neural network to generate new YouTube comments from existing ones.
+# YouTube Comment RNN
 
-## What Does This Do?
-Given several youtube links, this will use [yt-dlp](https://github.com/yt-dlp/yt-dlp) to download all of the comments from those videos. It will then put the comments through a recurrent neural network (RNN) and provide you with a GUI that will create brand new comments based on the existing ones.
+A local-first pipeline that downloads YouTube comments with yt-dlp, preprocesses them, trains a word-level recurrent neural network, and generates new text through a CLI, Textual TUI, or FastAPI.
 
-## Why Did You Make This?
-On some types of YouTube videos, such as shorts made for children, you'll see many comments that are unintelligible, use lots of emojis and feature many brainrot words. I wanted to see if I could make a simple text generation model to try and mimic these types of comments.
+## Quick Start
 
-## How Do I Use This?
-1. Install the requirements using `pip install -r requirements.txt`.
+Requires Python 3.11 or newer.
 
-### I Don't Want To Train My Own Model
-2. If you don't want to train your own model with your own links, simply just run `gui.py` and use the GUI to generate new comments. The existing model, `rnn_model.pth` is currently trained on 10,000 of these brainrot comments.
+```powershell
+python -m venv .venv
+.venv\Scripts\Activate.ps1
+pip install -r requirements.txt
+ytcomments status
+ytcomments download
+ytcomments preprocess
+ytcomments train
+ytcomments generate
+```
 
-### I Want To Train My Own Model
-2. Collect the links of various YouTube videos that feature the type of comments that you want to replicate.
-3. Put these links in `links.txt`, each on a new line.
-4. Run `download.py`. Be careful, as this uses YouTube's API to download comments. You could get rate limited.
-5. Train the model by running `train.py`. You can modify the `max_comments` variable to determine how many comments from the dataset will be used for training. Currently it is set to 10,000, but you can increase it if you have a lot of VRAM.
-6. Run the model using `gui.py`.
+The interactive terminal interface is available with `ytcomments tui` or `ytcomments-tui`. Long-running TUI actions run in the background and stream progress into the log. CLI download, preprocessing, and training commands also print live progress. The API runs with `ytcomments-api` and exposes `/health`, `/status`, and `POST /generate`.
 
-## Misc Info
-You can run `create-comments-list.py` to create a list of all comments in your dataset at `comments.txt`. This is useful to see if the comments you're generating are copies of comments in the dataset or if they're new. If some comments are copies, you are likely training too many epochs and overfitting the dataset. Consider reducing the number of epochs.
+## Configuration
 
-## Gallery
-![A screenshot of the GUI to create comments.](images/gui.png)
+The root-level [links.yaml](links.yaml) is the canonical input. It supports global settings and future per-video options:
+
+```yaml
+settings:
+  max_comments: null
+  language: en
+videos:
+  - url: https://www.youtube.com/watch?v=example
+    name: example
+    enabled: true
+    max_comments: null
+    options: {}
+```
+
+Generated data lives under `data/`, model runs under `artifacts/models/`, and run logs/checkpoints belong under `runs/`. Model artifacts contain their vocabulary, special tokens, dimensions, preprocessing version, and training metadata.
+
+## Development
+
+```powershell
+pip install -e ".[test]"
+python -m pytest
+```
+
+The architecture and implementation plan are in [docs/PROJECT.md](docs/PROJECT.md), [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md), and [docs/ROADMAP.md](docs/ROADMAP.md).
+
+Downloading comments can be rate-limited by YouTube and is subject to the relevant platform terms. Generated text should be reviewed before use.
