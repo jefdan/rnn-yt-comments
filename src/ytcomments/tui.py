@@ -16,7 +16,10 @@ class CommentApp(App[None]):
     CSS = """
     Screen { background: $surface; }
     #main { padding: 1 2; }
-    #status { height: 3; border: round $accent; padding: 1; }
+    #heading { height: auto; }
+    #title { width: 1fr; }
+    #status-heading { height: 1; }
+    #status { width: auto; height: auto; min-height: 3; border: round $accent; padding: 1; }
     #chat { height: 3; margin-top: 1; }
     #prompt { width: 1fr; }
     #log { height: 1fr; border: round $primary; margin-top: 1; }
@@ -31,23 +34,30 @@ class CommentApp(App[None]):
     def compose(self) -> ComposeResult:
         yield Header(show_clock=True)
         with Vertical(id="main"):
-            yield Static("YouTube Comment Chat", id="title")
-            yield Label("Loading project status...", id="status")
             with Horizontal():
-                yield Button("Download", id="download")
-                yield Button("Preprocess", id="preprocess")
-                yield Button("Train", id="train")
+                with Vertical():
+                    yield Static("YouTube Comment Chat", id="title")
+                    with Horizontal():
+                        yield Button("Download", id="download")
+                        yield Button("Preprocess", id="preprocess")
+                        yield Button("Train", id="train")
+                with Vertical(id="heading"):
+                    yield Static("Project status", id="status-heading")
+                    yield Label("Ready - no action running", id="status")
+
+            yield RichLog(id="log", highlight=True, markup=True)
             with Horizontal(id="chat"):
                 yield Input(placeholder="Message the model...", id="prompt")
                 yield Button("Send", id="send", variant="primary")
-            yield RichLog(id="log", highlight=True, markup=True)
         yield Footer()
 
     def on_mount(self) -> None:
         self._refresh_status()
 
     def _refresh_status(self) -> None:
-        self.query_one("#status", Label).update(str(self.service.status()))
+        status = self.service.status()
+        summary = ", ".join(f"{key}={value}" for key, value in status.items())
+        self.query_one("#status", Label).update(f"Status: {summary}")
 
     def _log(self, message: str) -> None:
         self.query_one("#log", RichLog).write(message)
